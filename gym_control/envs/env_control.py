@@ -32,7 +32,8 @@ class LinearSISOEnv(gym.Env):
         )
         sys_tf = ct.tf(env_config["num"], env_config["den"])
         # self.sys = ct.LinearIOSystem(sys_tf, inputs="u", outputs="y", dt=env_config["dt"])
-        self.sys = ct.LinearIOSystem(sys_tf, inputs="u", outputs="y")
+        # self.sys = ct.LinearIOSystem(sys_tf, inputs="u", outputs="y")
+        self.sys = ct.tf2ss(sys_tf, inputs="u", outputs="y")
         if not self.check_controllability(self.sys):
             raise Exception("System is not controllable!, Try another system.")
         self.collected_reward = -1  # Total collected reward [scalar]
